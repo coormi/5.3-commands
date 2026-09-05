@@ -61,6 +61,9 @@ code {
 .auth { color: #ffbd8a; font-size: 12px; margin-top: 10px; }
 footer { color: #687184; text-align: center; margin-top: 55px; font-size: 13px; }
 .hidden { display: none !important; }
+
+.tag-list { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.tag-list span { padding:4px 9px; border:1px solid var(--border); border-radius:999px; font-size:.82rem; }
 </style>
 </head>
 <body>
@@ -113,6 +116,30 @@ footer { color: #687184; text-align: center; margin-top: 55px; font-size: 13px; 
   </div>
 
   <h2 class="section-title">Map Selection</h2>
+<div class="command-card" data-command="!rd !random random map category jump tech aim anime stream chill banger vocaloid kpop 5star low_ar hard_rock touhou farm meme miku jpop">
+  <div class="command-top">
+    <code>!rd [category]</code>
+    <span class="alias">!random</span>
+  </div>
+  <p>Selects a random map from the configured osu!Collector collections. Without a category, all configured collections are used. With a category, only that category's collection pool is used.</p>
+  <div class="subsection">
+    <strong>Configured categories</strong>
+    <div class="tag-list">
+      <span>jump</span><span>tech</span><span>aim</span><span>anime</span>
+      <span>stream</span><span>chill</span><span>banger</span><span>vocaloid</span>
+      <span>kpop</span><span>5star</span><span>low_ar</span><span>hard_rock</span>
+      <span>touhou</span><span>farm</span><span>meme</span><span>miku</span><span>jpop</span>
+    </div>
+  </div>
+  <ul>
+    <li>Category names are case-insensitive.</li>
+    <li>Misspelled category names receive a closest-match suggestion when the match is close enough.</li>
+    <li>The selected map must fit the current MapChecker star range.</li>
+    <li>The bot checks up to 15 random candidates and skips deleted or unavailable maps.</li>
+    <li>Only the current host or an authorized user can use the command.</li>
+  </ul>
+</div>
+
   <div class="grid">
     <article class="card"><div class="command"><code>!rd</code><code>!random</code></div><div class="desc">Selects a random map. An optional category can be supplied to restrict the random selection.</div></article>
   </div>
