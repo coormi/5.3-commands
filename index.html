@@ -8,15 +8,25 @@
 
 <style>
     :root {
-        --bg: #e3e5e8;
-        --card: #f4f5f6;
-        --text: #24282d;
-        --muted: #626a73;
-        --border: #c9cdd2;
-        --header: #d8dce0;
-        --hover: #e9ebed;
-        --accent: #3978c8;
-        --code-bg: #dfe2e5;
+        --bg: #f8f9fc;
+        --card: #ffffff;
+        --text: #1e293b;
+        --muted: #64748b;
+        --border: #f1d5e2;
+        --table-border: #f5e3ec;
+        --osu-pink: #ff66aa;
+        --osu-pink-hover: #e84393;
+        --osu-pink-light: #fff0f6;
+        --header-gradient: linear-gradient(135deg, #ff66aa 0%, #e84393 60%, #ba236c 100%);
+        --table-header-bg: #fff2f8;
+        --table-header-text: #ba1b67;
+        --hover-row: #fff6fa;
+        --code-bg: #fff0f6;
+        --code-text: #ba1b67;
+        --code-border: #fbcfe8;
+        --category-bg: #fff0f6;
+        --category-text: #b81e69;
+        --category-border: #fbcfe8;
     }
 
     * {
@@ -31,71 +41,121 @@
         margin: 0;
         background: var(--bg);
         color: var(--text);
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 15.5px;
         line-height: 1.6;
     }
 
     .container {
-        width: min(1100px, calc(100% - 32px));
+        width: min(1080px, calc(100% - 32px));
         margin: auto;
     }
 
     header {
-        padding: 42px 0 24px;
+        padding: 44px 0 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        background: var(--code-bg);
+        border: 1px solid var(--code-border);
+        color: var(--code-text);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
+    .header-badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--osu-pink);
     }
 
     h1 {
         margin: 0;
         font-size: 38px;
-        letter-spacing: -0.5px;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        background: var(--header-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .subtitle {
-        margin: 7px 0 0;
+        margin: 8px 0 0;
         color: var(--muted);
         font-size: 16px;
     }
 
     .search-box {
         position: sticky;
-        top: 12px;
+        top: 14px;
         z-index: 10;
-        margin-bottom: 32px;
+        margin-bottom: 34px;
     }
 
     #search {
         width: 100%;
-        padding: 14px 16px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        background: #f1f2f3;
+        padding: 15px 18px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        background: #ffffff;
         color: var(--text);
         font-size: 16px;
         outline: none;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+        box-shadow: 0 4px 20px rgba(255, 102, 170, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+        transition: all 0.2s ease;
     }
 
     #search:focus {
-        border-color: var(--accent);
+        border-color: var(--osu-pink);
+        box-shadow: 0 4px 24px rgba(255, 102, 170, 0.22);
+    }
+
+    #search::placeholder {
+        color: #94a3b8;
     }
 
     .command-section {
-        margin-bottom: 32px;
+        margin-bottom: 34px;
     }
 
     .command-section h2 {
-        margin: 0 0 11px;
-        font-size: 23px;
+        margin: 0 0 12px;
+        font-size: 21px;
         font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #1e293b;
+    }
+
+    .command-section h2::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 20px;
+        background: var(--osu-pink);
+        border-radius: 4px;
     }
 
     .table-container {
         overflow-x: auto;
         background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--table-border);
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
     }
 
     table {
@@ -104,37 +164,41 @@
         min-width: 720px;
     }
 
-    th,
-    td {
-        padding: 12px 15px;
+    th, td {
+        padding: 13px 18px;
         text-align: left;
         vertical-align: top;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--table-border);
     }
 
     th {
-        background: var(--header);
-        color: #50575f;
-        font-size: 13px;
+        background: var(--table-header-bg);
+        color: var(--table-header-text);
+        font-size: 12.5px;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.06em;
         white-space: nowrap;
     }
 
     td {
-        font-size: 15.5px;
+        font-size: 15px;
     }
 
     tbody tr:last-child td {
         border-bottom: none;
     }
 
+    tbody tr {
+        transition: background 0.15s ease;
+    }
+
     tbody tr:hover {
-        background: var(--hover);
+        background: var(--hover-row);
     }
 
     td.command {
-        width: 290px;
+        width: 300px;
         white-space: nowrap;
     }
 
@@ -145,53 +209,70 @@
     }
 
     code {
-        padding: 4px 7px;
-        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 6px;
         background: var(--code-bg);
-        font-family: Consolas, "Courier New", monospace;
-        font-size: 14px;
+        color: var(--code-text);
+        border: 1px solid var(--code-border);
+        font-family: Consolas, "Cascadia Code", "Courier New", monospace;
+        font-size: 13.5px;
+        font-weight: 600;
     }
 
     .category-list {
-        line-height: 2.1;
+        line-height: 2.3;
     }
 
     .category {
         display: inline-block;
         margin: 2px 4px 2px 0;
-        padding: 3px 8px;
-        border: 1px solid var(--border);
-        border-radius: 5px;
-        background: var(--code-bg);
+        padding: 3px 10px;
+        border: 1px solid var(--category-border);
+        border-radius: 9999px;
+        background: var(--category-bg);
+        color: var(--category-text);
         font-family: Consolas, "Courier New", monospace;
         font-size: 13px;
+        font-weight: 600;
+        transition: all 0.15s ease;
+        cursor: default;
+    }
+
+    .category:hover {
+        background: var(--osu-pink);
+        color: #ffffff;
+        border-color: var(--osu-pink);
+        transform: translateY(-1px);
     }
 
     #no-results {
         display: none;
-        padding: 45px 20px;
+        padding: 50px 20px;
         text-align: center;
         color: var(--muted);
         font-size: 16px;
+        background: var(--card);
+        border: 1px solid var(--table-border);
+        border-radius: 12px;
     }
 
     footer {
-        padding: 5px 0 42px;
+        padding: 10px 0 48px;
         color: var(--muted);
         font-size: 14px;
+        text-align: center;
     }
 
     @media (max-width: 700px) {
         .container {
             width: calc(100% - 20px);
         }
-
         header {
-            padding-top: 28px;
+            padding-top: 30px;
         }
-
         h1 {
-            font-size: 32px;
+            font-size: 30px;
         }
     }
 </style>
@@ -202,9 +283,10 @@
 <div class="container">
 
 <header>
+    <div class="header-badge">osu! Multi Lobby</div>
     <h1>osu! AHR Commands</h1>
     <p class="subtitle">
-        Quick reference for the osu! Auto Host Rotation bot.
+        Interactive command reference for the Auto Host Rotation bot.
     </p>
 </header>
 
@@ -277,7 +359,7 @@
 <tr>
     <td class="command"><code>!maptags</code></td>
     <td class="alias"><code>!mt</code></td>
-    <td>Shows the current map's stored tags. If none exist, the bot attempts to fetch related community tags.</td>
+    <td>Shows the current map's stored tags. If none exist, the bot attempts to fetch official difficulty-specific tags from the osu! API.</td>
 </tr>
 
 <tr>
@@ -296,9 +378,7 @@
     <td class="command"><code>!rs</code></td>
     <td class="alias">—</td>
     <td>
-        Looks up your most recent score for the lobby's current game mode.
-        The result includes score information such as mods, accuracy, combo,
-        misses, and hit counts.
+        Looks up your most recent score for the lobby's game mode, including mods, accuracy, combo, misses, and accurate FC pp.
     </td>
 </tr>
 
@@ -315,6 +395,14 @@
     <td class="alias">—</td>
     <td>
         Calculates 100%, 98%, and 95% FC performance points (pp) and star rating for the current map. Supports optional mods like <code>!pp hr</code>, <code>!pp hdhr</code>, <code>!pp dt</code>, <code>!pp fl</code>. Defaults to NM if no mods are specified.
+    </td>
+</tr>
+
+<tr>
+    <td class="command"><code>!rank</code></td>
+    <td class="alias">—</td>
+    <td>
+        Shows your current global rank in the lobby's game mode.
     </td>
 </tr>
 
@@ -364,7 +452,7 @@
 </tr>
 
 <tr>
-    <td class="command"><code>*reorder</code></td>
+    <td class="command"><code>*reorder &lt;order&gt;</code></td>
     <td class="alias"><code>*order</code></td>
     <td>Authorized users can reorder the host queue.</td>
 </tr>
@@ -405,7 +493,7 @@
 <tr>
     <td class="command"><code>!start</code></td>
     <td class="alias">—</td>
-    <td>The host can start immediately. Non-host players can use it to vote.</td>
+    <td>The host can start immediately. Non-host players can use it to vote start.</td>
 </tr>
 
 <tr>
@@ -417,13 +505,19 @@
 <tr>
     <td class="command"><code>!stop</code></td>
     <td class="alias"><code>!abort</code></td>
-    <td>The host or an authorized user can stop an active bot-managed start timer.</td>
+    <td>The host or an authorized user can stop an active bot-managed start timer. Players can use it to vote abort.</td>
 </tr>
 
 <tr>
     <td class="command"><code>*start</code></td>
     <td class="alias">—</td>
-    <td>Authorized-only immediate start.</td>
+    <td>Authorized-only immediate match start.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*abort</code></td>
+    <td class="alias">—</td>
+    <td>Authorized-only immediate match abort (bypasses player voting).</td>
 </tr>
 
 </tbody>
@@ -433,11 +527,11 @@
 </section>
 
 
-<!-- ==================== MAP SELECTION ==================== -->
+<!-- ==================== MAP SELECTION & RULES ==================== -->
 
 <section class="command-section">
 
-<h2>Map Selection</h2>
+<h2>Map Selection & Rules</h2>
 
 <div class="table-container">
 
@@ -460,6 +554,30 @@
         Picks a random map from the configured osu!Collector collections.
         Without a category, all configured collections are used.
         With a category, only that category's collection pool is used.
+    </td>
+</tr>
+
+<tr>
+    <td class="command"><code>!regulation</code></td>
+    <td class="alias"><code>!r</code></td>
+    <td>
+        Shows the current lobby regulation rules (star rating limits, max length, etc.).
+    </td>
+</tr>
+
+<tr>
+    <td class="command"><code>!update</code></td>
+    <td class="alias">—</td>
+    <td>
+        Updates the currently selected beatmap to the latest version on osu!. Useful if the host picked an outdated version.
+    </td>
+</tr>
+
+<tr>
+    <td class="command"><code>!mirror</code></td>
+    <td class="alias">—</td>
+    <td>
+        Provides alternative BeatConnect.io and Kitsu.moe download mirror links for the currently selected map.
     </td>
 </tr>
 
@@ -616,6 +734,162 @@
     <td>Authorized-only removal of a ban.</td>
 </tr>
 
+<tr>
+    <td class="command"><code>!banmapset &lt;id&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Authorized-only ban of a specific beatmapset from being picked.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>!unbanmapset &lt;id&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Authorized-only removal of a beatmapset ban.</td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+</section>
+
+
+<!-- ==================== LOBBY MANAGEMENT (AUTHORIZED) ==================== -->
+
+<section class="command-section">
+
+<h2>Lobby Management (Authorized)</h2>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+    <th>Command</th>
+    <th>Alias</th>
+    <th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td class="command"><code>*keep size &lt;1-16&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Locks and enforces the lobby player capacity to the specified size.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*keep mode &lt;team&gt; &lt;score&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Locks and enforces the lobby team and score mode (e.g. <code>headtohead scorev2</code>).</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*keep mods &lt;mods&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Locks the lobby active mods (e.g. <code>*keep mods freemod</code>).</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*keep password [password]</code></td>
+    <td class="alias">—</td>
+    <td>Sets and locks the room password (leave blank for no password).</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*keep title &lt;name&gt;</code></td>
+    <td class="alias"><code>*keep name</code></td>
+    <td>Locks and enforces the room title name.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*no keep &lt;setting&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Disables keeping <code>mode</code>, <code>size</code>, <code>mods</code>, <code>password</code>, or <code>title</code>.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*clear</code></td>
+    <td class="alias"><code>*clearcache</code></td>
+    <td>Manually clears cached beatmap files and history from memory.</td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+</section>
+
+
+<!-- ==================== AUTOMATION & RULES (AUTHORIZED) ==================== -->
+
+<section class="command-section">
+
+<h2>Automation & Rules (Authorized)</h2>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+    <th>Command</th>
+    <th>Alias</th>
+    <th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td class="command"><code>*regulation &lt;key&gt;=&lt;val&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Modifies difficulty rules live in chat (e.g. <code>*regulation diff_min=4.0 diff_max=5.3 length_max=300</code>).</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*regulation enabled / disabled</code></td>
+    <td class="alias">—</td>
+    <td>Toggles regulation limit checks on or off.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*no regulation</code></td>
+    <td class="alias">—</td>
+    <td>Completely disables all regulation checking in the room.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*mapchecker_enable / disable</code></td>
+    <td class="alias">—</td>
+    <td>Enables or disables the MapChecker plugin.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*autostart_enable / disable</code></td>
+    <td class="alias">—</td>
+    <td>Enables or disables the automatic match start timer when a map is picked.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*autostart_time &lt;seconds&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Sets the countdown duration for the auto-start timer (e.g. <code>*autostart_time 30</code>).</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*afkkick_enable / disable</code></td>
+    <td class="alias">—</td>
+    <td>Enables or disables automatic kicking of AFK players.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*afkkick_threshold &lt;count&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Sets how many consecutive rounds a player can be AFK before being kicked.</td>
+</tr>
+
 </tbody>
 </table>
 
@@ -645,8 +919,8 @@
 
 <tr>
     <td class="command"><code>!help</code></td>
-    <td class="alias">—</td>
-    <td>Shows the bot's command overview.</td>
+    <td class="alias"><code>!commands</code></td>
+    <td>Shows the bot's command overview in chat.</td>
 </tr>
 
 </tbody>
@@ -700,10 +974,6 @@ search.addEventListener("input", function () {
             }
         });
 
-        /*
-         * Hide the entire section, including its heading,
-         * when none of its rows match.
-         */
         section.style.display =
             sectionMatches > 0 ? "" : "none";
     });
