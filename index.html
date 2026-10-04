@@ -264,6 +264,12 @@
         text-align: center;
     }
 
+    footer a {
+        color: var(--osu-pink-hover);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
     @media (max-width: 700px) {
         .container {
             width: calc(100% - 20px);
@@ -359,7 +365,7 @@
 <tr>
     <td class="command"><code>!maptags</code></td>
     <td class="alias"><code>!mt</code></td>
-    <td>Shows the current map's stored tags. If none exist, the bot attempts to fetch official difficulty-specific tags from the osu! API.</td>
+    <td>Shows the current map's stored tags. If none exist, the bot fetches official difficulty-specific tags from the osu! API.</td>
 </tr>
 
 <tr>
@@ -394,7 +400,7 @@
     <td class="command"><code>!pp [mods]</code></td>
     <td class="alias">—</td>
     <td>
-        Calculates 100%, 98%, and 95% FC performance points (pp) and star rating for the current map. Supports optional mods like <code>!pp hr</code>, <code>!pp hdhr</code>, <code>!pp dt</code>, <code>!pp fl</code>. Defaults to NM if no mods are specified.
+        Calculates 100%, 98%, and 95% FC performance points (pp) and star rating for the current map. Supports optional mods (e.g. <code>!pp hr</code>, <code>!pp hdhr</code>, <code>!pp dt</code>, <code>!pp fl</code>). Defaults to NM.
     </td>
 </tr>
 
@@ -499,13 +505,19 @@
 <tr>
     <td class="command"><code>!start &lt;seconds&gt;</code></td>
     <td class="alias">—</td>
-    <td>The host or an authorized user can start a bot-managed start timer.</td>
+    <td>The host or an authorized user can start a countdown timer (e.g. <code>!start 30</code>).</td>
 </tr>
 
 <tr>
     <td class="command"><code>!stop</code></td>
-    <td class="alias"><code>!abort</code></td>
-    <td>The host or an authorized user can stop an active bot-managed start timer. Players can use it to vote abort.</td>
+    <td class="alias">—</td>
+    <td>The host or an authorized user can stop an active start countdown timer.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>!abort</code></td>
+    <td class="alias">—</td>
+    <td>Votes to abort an in-progress match. The host, authorized users, or referees abort immediately in 1 command.</td>
 </tr>
 
 <tr>
@@ -517,7 +529,7 @@
 <tr>
     <td class="command"><code>*abort</code></td>
     <td class="alias">—</td>
-    <td>Authorized-only immediate match abort (bypasses player voting).</td>
+    <td>Authorized-only immediate match abort (cancels immediately without voting).</td>
 </tr>
 
 </tbody>
@@ -746,6 +758,18 @@
     <td>Authorized-only removal of a beatmapset ban.</td>
 </tr>
 
+<tr>
+    <td class="command"><code>!addref [player]</code></td>
+    <td class="alias">—</td>
+    <td>Authorized-only command to grant Bancho referee status to yourself or the specified player.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>!rmref &lt;player&gt;</code></td>
+    <td class="alias"><code>!removeref</code></td>
+    <td>Authorized-only command to remove Bancho referee status from a player.</td>
+</tr>
+
 </tbody>
 </table>
 
@@ -845,13 +869,21 @@
 <tr>
     <td class="command"><code>*regulation &lt;key&gt;=&lt;val&gt;</code></td>
     <td class="alias">—</td>
-    <td>Modifies difficulty rules live in chat (e.g. <code>*regulation diff_min=4.0 diff_max=5.3 length_max=300</code>).</td>
+    <td>
+        Modifies rules live in chat. Supported keys: <code>star_min</code> (or <code>diff_min</code>), <code>star_max</code> (or <code>diff_max</code>), <code>length_min</code>, <code>length_max</code>, <code>num_violations_allowed</code>, <code>gamemode</code>.
+    </td>
 </tr>
 
 <tr>
     <td class="command"><code>*regulation enabled / disabled</code></td>
     <td class="alias">—</td>
     <td>Toggles regulation limit checks on or off.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*regulation allow_convert</code></td>
+    <td class="alias"><code>disallow_convert</code></td>
+    <td>Allows or disallows converted beatmaps.</td>
 </tr>
 
 <tr>
@@ -879,6 +911,12 @@
 </tr>
 
 <tr>
+    <td class="command"><code>*autostart_clearhost_enable</code></td>
+    <td class="alias"><code>disable</code></td>
+    <td>Toggles clearing host if the host does not pick a beatmap.</td>
+</tr>
+
+<tr>
     <td class="command"><code>*afkkick_enable / disable</code></td>
     <td class="alias">—</td>
     <td>Enables or disables automatic kicking of AFK players.</td>
@@ -888,6 +926,12 @@
     <td class="command"><code>*afkkick_threshold &lt;count&gt;</code></td>
     <td class="alias">—</td>
     <td>Sets how many consecutive rounds a player can be AFK before being kicked.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>*afkkick_cooltime &lt;ms&gt;</code></td>
+    <td class="alias">—</td>
+    <td>Sets the cooldown in milliseconds for the AFK kicker.</td>
 </tr>
 
 </tbody>
@@ -901,7 +945,7 @@
 
 <section class="command-section">
 
-<h2>Help</h2>
+<h2>Help & Info</h2>
 
 <div class="table-container">
 
@@ -921,6 +965,18 @@
     <td class="command"><code>!help</code></td>
     <td class="alias"><code>!commands</code></td>
     <td>Shows the bot's command overview in chat.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>!version</code></td>
+    <td class="alias"><code>!v</code></td>
+    <td>Displays the bot software version.</td>
+</tr>
+
+<tr>
+    <td class="command"><code>!info</code></td>
+    <td class="alias">—</td>
+    <td>Displays the room information message.</td>
 </tr>
 
 </tbody>
